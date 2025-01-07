@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; // Assurez-vous d'installer ce package
+import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
-import { NavigationContainer } from '@react-navigation/native';
-
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export default function GitHubReposScreen() {
-  const [language, setLanguage] = useState('javascript'); // Langage par défaut
+  const [language, setLanguage] = useState('javascript');
   const [repositories, setRepositories] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  
+  type RootStackParamList = {
+    details: { repo: { id: number; name: string; description: string; stargazers_count: number } };
+  };
+  
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     fetchRepositories();
@@ -29,12 +36,15 @@ export default function GitHubReposScreen() {
   };
 
   const renderRepository = ({ item }: { item: { id: number; name: string; description: string; stargazers_count: number } }) => (
-    <TouchableOpacity>
-    <View style={styles.card}>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.description}>{item.description || 'Pas de description'}</Text>
-      <Text style={styles.stars}>⭐ {item.stargazers_count}</Text>
-    </View>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => navigation.navigate('details', { repo: item })} // Navigate to the details screen with the repo data
+    >
+      <View>
+        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.description}>{item.description || 'Pas de description'}</Text>
+        <Text style={styles.stars}>⭐ {item.stargazers_count}</Text>
+      </View>
     </TouchableOpacity>
   );
 
