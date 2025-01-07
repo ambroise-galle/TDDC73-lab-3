@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    height: 100
+    height: 60
   },
   button: {
     padding: 10,

@@ -17,7 +17,8 @@ export default function StackLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Search',
+          headerShown: true,
         }}
       />
       <Stack.Screen
@@ -25,8 +26,9 @@ export default function StackLayout() {
         options={{
           title: 'Details',
           headerShown: true, // Show the header for the details screen
-          headerBackVisible: false, // Hide the back button
+          headerBackVisible: true, // Hide the back button
           headerTintColor: 'rgb(10, 126, 164)', // Customize the back arrow color
+          headerTitleAlign: 'center',
         }}
       />
     </Stack>
