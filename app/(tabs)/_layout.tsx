@@ -35,17 +35,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="details"
         options={{
-          title: 'Explore',
+          title: 'Details',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="repo-detail/[id]"
-        options={{
-          title: 'Repo Details',
-          tabBarButton: () => null, // Hide the tab bar button for this screen
         }}
       />
     </Tabs>

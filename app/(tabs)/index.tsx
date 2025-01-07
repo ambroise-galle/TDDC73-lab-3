@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker'; // Assurez-vous d'installer ce package
 import axios from 'axios';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 export default function GitHubReposScreen() {
