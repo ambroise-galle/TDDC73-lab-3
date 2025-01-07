@@ -4,9 +4,11 @@ import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import moment from 'moment';
 
 export default function GitHubReposScreen() {
   const [language, setLanguage] = useState('javascript');
+  const [dateFilter, setDateFilter] = useState('any');
   const [repositories, setRepositories] = useState([]);
   const [loading, setLoading] = useState(false);
   
@@ -18,13 +20,31 @@ export default function GitHubReposScreen() {
 
   useEffect(() => {
     fetchRepositories();
-  }, [language]);
+  }, [language, dateFilter]);
 
   const fetchRepositories = async () => {
     setLoading(true);
     try {
+      let dateQuery = '';
+      if (dateFilter !== 'any') {
+        const today = moment();
+        switch (dateFilter) {
+          case 'today':
+            dateQuery = `pushed:>${today.subtract(1, 'days').format('YYYY-MM-DD')}`;
+            break;
+          case 'this_week':
+            dateQuery = `pushed:>${today.subtract(1, 'weeks').format('YYYY-MM-DD')}`;
+            break;
+          case 'this_month':
+            dateQuery = `pushed:>${today.subtract(1, 'months').format('YYYY-MM-DD')}`;
+            break;
+          case 'this_year':
+            dateQuery = `pushed:>${today.subtract(1, 'years').format('YYYY-MM-DD')}`;
+            break;
+        }
+      }
       const response = await axios.get(
-        `https://api.github.com/search/repositories?q=language:${language}&sort=stars&order=desc&per_page=10`
+        `https://api.github.com/search/repositories?q=language:${language}${dateQuery ? `+${dateQuery}` : ''}&sort=stars&order=desc&per_page=10`
       );
       setRepositories(response.data.items);
     } catch (error) {
@@ -37,7 +57,7 @@ export default function GitHubReposScreen() {
   const renderRepository = ({ item }: { item: { id: number; full_name: string; name: string; description: string; stargazers_count: number } }) => (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate('details', { repo: item })} // Navigate to the details screen with the repo data
+      onPress={() => navigation.navigate('details', { repo: item })}
     >
       <View>
         <Text style={styles.name}>{item.name}</Text>
@@ -62,6 +82,18 @@ export default function GitHubReposScreen() {
         <Picker.Item label="Go" value="go" />
         <Picker.Item label="Ruby" value="ruby" />
         <Picker.Item label="Swift" value="swift" />
+      </Picker>
+      <Text style={styles.title}>Filtrer par dernière mise à jour :</Text>
+      <Picker
+        selectedValue={dateFilter}
+        onValueChange={(itemValue) => setDateFilter(itemValue)}
+        style={styles.picker}
+      >
+        <Picker.Item label="Any" value="any" />
+        <Picker.Item label="Today" value="today" />
+        <Picker.Item label="This Week" value="this_week" />
+        <Picker.Item label="This Month" value="this_month" />
+        <Picker.Item label="This Year" value="this_year" />
       </Picker>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" style={styles.loader} />
