@@ -10,9 +10,8 @@ export default function GitHubReposScreen() {
   const [repositories, setRepositories] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  
   type RootStackParamList = {
-    details: { repo: { id: number; name: string; description: string; stargazers_count: number } };
+    details: { repo: { full_name: string; name: string; description: string; stargazers_count: number } };
   };
   
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -35,7 +34,7 @@ export default function GitHubReposScreen() {
     }
   };
 
-  const renderRepository = ({ item }: { item: { id: number; name: string; description: string; stargazers_count: number } }) => (
+  const renderRepository = ({ item }: { item: { id: number; full_name: string; name: string; description: string; stargazers_count: number } }) => (
     <TouchableOpacity
       style={styles.card}
       onPress={() => navigation.navigate('details', { repo: item })} // Navigate to the details screen with the repo data
