@@ -75,6 +75,7 @@ export default function GitHubReposScreen() {
           selectedValue={language}
           onValueChange={(itemValue) => setLanguage(itemValue)}
           style={styles.picker}
+          itemStyle={{ fontSize:17 }}
         >
           <Picker.Item label="JavaScript" value="javascript" />
           <Picker.Item label="Python" value="python" />
@@ -110,22 +111,48 @@ export default function GitHubReposScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 10, backgroundColor: '#f9f9f9' },
-  title: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
-  pickerContainer: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
-  picker: { flex: 1, height: 50, backgroundColor: '#e0e0e0', marginHorizontal: 5 },
-  loader: { marginTop: 20 },
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#f9f9f9'
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  pickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20
+  },
+  picker: {
+    flex: 1,
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: 'rgba(0, 0, 0, 0.07)',
+    marginHorizontal: 5,
+    borderColor: 'rgba(0, 0, 0, 0)',
+  },
+  loader: {
+    marginTop: 20
+  },
   card: {
     backgroundColor: '#fff',
     padding: 15,
     marginBottom: 10,
     borderRadius: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.1)', // Replaced shadow with boxShadow
   },
-  name: { fontSize: 18, fontWeight: 'bold' },
-  description: { fontSize: 14, color: '#555', marginVertical: 5 },
-  stars: { fontSize: 14, color: '#777' },
+  name: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  description: {
+    fontSize: 14,
+    color: '#555',
+    marginVertical: 5 },
+  stars: {
+    fontSize: 14,
+    color: '#777' },
 });
