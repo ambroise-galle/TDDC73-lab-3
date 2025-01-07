@@ -48,7 +48,7 @@ export default function GitHubReposScreen() {
       );
       setRepositories(response.data.items);
     } catch (error) {
-      console.error("Erreur lors de la récupération des dépôts :", error);
+      console.error("Error fetching repositories:", error);
     } finally {
       setLoading(false);
     }
@@ -61,7 +61,7 @@ export default function GitHubReposScreen() {
     >
       <View>
         <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.description}>{item.description || 'Pas de description'}</Text>
+        <Text style={styles.description}>{item.description || 'No description available'}</Text>
         <Text style={styles.stars}>⭐ {item.stargazers_count}</Text>
       </View>
     </TouchableOpacity>
@@ -69,32 +69,33 @@ export default function GitHubReposScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sélectionnez un langage :</Text>
-      <Picker
-        selectedValue={language}
-        onValueChange={(itemValue) => setLanguage(itemValue)}
-        style={styles.picker}
-      >
-        <Picker.Item label="JavaScript" value="javascript" />
-        <Picker.Item label="Python" value="python" />
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="C++" value="cpp" />
-        <Picker.Item label="Go" value="go" />
-        <Picker.Item label="Ruby" value="ruby" />
-        <Picker.Item label="Swift" value="swift" />
-      </Picker>
-      <Text style={styles.title}>Filtrer par dernière mise à jour :</Text>
-      <Picker
-        selectedValue={dateFilter}
-        onValueChange={(itemValue) => setDateFilter(itemValue)}
-        style={styles.picker}
-      >
-        <Picker.Item label="Any" value="any" />
-        <Picker.Item label="Today" value="today" />
-        <Picker.Item label="This Week" value="this_week" />
-        <Picker.Item label="This Month" value="this_month" />
-        <Picker.Item label="This Year" value="this_year" />
-      </Picker>
+      <Text style={styles.title}>Select a language and filter by last update:</Text>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={language}
+          onValueChange={(itemValue) => setLanguage(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="JavaScript" value="javascript" />
+          <Picker.Item label="Python" value="python" />
+          <Picker.Item label="Java" value="java" />
+          <Picker.Item label="C++" value="cpp" />
+          <Picker.Item label="Go" value="go" />
+          <Picker.Item label="Ruby" value="ruby" />
+          <Picker.Item label="Swift" value="swift" />
+        </Picker>
+        <Picker
+          selectedValue={dateFilter}
+          onValueChange={(itemValue) => setDateFilter(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Any" value="any" />
+          <Picker.Item label="Today" value="today" />
+          <Picker.Item label="This Week" value="this_week" />
+          <Picker.Item label="This Month" value="this_month" />
+          <Picker.Item label="This Year" value="this_year" />
+        </Picker>
+      </View>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" style={styles.loader} />
       ) : (
@@ -111,7 +112,8 @@ export default function GitHubReposScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 10, backgroundColor: '#f9f9f9' },
   title: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
-  picker: { height: 50, width: '100%', marginBottom: 20, backgroundColor: '#e0e0e0' },
+  pickerContainer: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
+  picker: { flex: 1, height: 50, backgroundColor: '#e0e0e0', marginHorizontal: 5 },
   loader: { marginTop: 20 },
   card: {
     backgroundColor: '#fff',
