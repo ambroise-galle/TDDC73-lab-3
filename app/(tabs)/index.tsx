@@ -75,7 +75,6 @@ export default function GitHubReposScreen() {
           selectedValue={language}
           onValueChange={(itemValue) => setLanguage(itemValue)}
           style={styles.picker}
-          itemStyle={{ fontSize:17 }}
         >
           <Picker.Item label="JavaScript" value="javascript" />
           <Picker.Item label="Python" value="python" />
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#f9f9f9'
+    backgroundColor: '#f2f2f2'
   },
   title: {
     fontSize: 18,

@@ -51,12 +51,30 @@ const Details: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 10, backgroundColor: '#f9f9f9' },
-  loader: { marginTop: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
-  author: { fontSize: 18, marginBottom: 5 },
-  description: { fontSize: 16, color: '#555', marginVertical: 10 },
-  info: { fontSize: 14, color: '#777', marginVertical: 2 },
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#f2f2f2'
+},
+  loader: {
+    marginTop: 20
+},
+  title: {
+    fontSize: 24, fontWeight: 'bold', marginBottom: 10
+},
+  author: {
+    fontSize: 18, marginBottom: 5
+},
+  description: {
+    fontSize: 16,
+    color: '#555',
+    marginVertical: 10
+},
+  info: {
+    fontSize: 14,
+    color: '#777',
+    marginVertical: 2
+},
 });
 
 export default Details;

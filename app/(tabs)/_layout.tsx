@@ -26,7 +26,7 @@ export default function StackLayout() {
           title: 'Details',
           headerShown: true, // Show the header for the details screen
           headerBackVisible: false, // Hide the back button
-          headerTintColor: Colors[colorScheme ?? 'light'].tint, // Customize the back arrow color
+          headerTintColor: 'rgb(10, 126, 164)', // Customize the back arrow color
         }}
       />
     </Stack>
