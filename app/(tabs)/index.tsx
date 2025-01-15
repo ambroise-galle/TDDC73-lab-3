@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -67,35 +66,38 @@ export default function GitHubReposScreen() {
     </TouchableOpacity>
   );
 
+  const languages = ['Javascript', 'Python', 'Java', 'C++', 'Go', 'Ruby', 'Swift'];
+  const dateFilters = ['Any', 'Today', 'This week', 'This month', 'This year'];
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Select a language and filter by last update:</Text>
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={language}
-          onValueChange={(itemValue) => setLanguage(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item label="JavaScript" value="javascript" />
-          <Picker.Item label="Python" value="python" />
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="C++" value="cpp" />
-          <Picker.Item label="Go" value="go" />
-          <Picker.Item label="Ruby" value="ruby" />
-          <Picker.Item label="Swift" value="swift" />
-        </Picker>
-        <Picker
-          selectedValue={dateFilter}
-          onValueChange={(itemValue) => setDateFilter(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item label="Any" value="any" />
-          <Picker.Item label="Today" value="today" />
-          <Picker.Item label="This Week" value="this_week" />
-          <Picker.Item label="This Month" value="this_month" />
-          <Picker.Item label="This Year" value="this_year" />
-        </Picker>
-      </View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
+        <View style={styles.buttonContainer}>
+          {languages.map((lang) => (
+            <TouchableOpacity
+              key={lang}
+              style={[styles.button, language === lang && styles.selectedButton]}
+              onPress={() => setLanguage(lang)}
+            >
+              <Text style={styles.buttonText}>{lang}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
+        <View style={styles.buttonContainer}>
+          {dateFilters.map((filter) => (
+            <TouchableOpacity
+              key={filter}
+              style={[styles.button, dateFilter === filter && styles.selectedButton]}
+              onPress={() => setDateFilter(filter)}
+            >
+              <Text style={styles.buttonText}>{filter}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" style={styles.loader} />
       ) : (
@@ -113,25 +115,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#f2f2f2'
+    backgroundColor: '#f9f9f9'
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10
   },
-  pickerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20
+  scrollContainer: {
+    marginBottom: 0,
   },
-  picker: {
-    flex: 1,
-    height: 50,
+  buttonContainer: {
+    flexDirection: 'row',
+    height: 60
+  },
+  button: {
+    padding: 10,
+    backgroundColor: '#e0e0e0',
     borderRadius: 5,
-    backgroundColor: 'rgba(0, 0, 0, 0.07)',
-    marginHorizontal: 5,
-    borderColor: 'rgba(0, 0, 0, 0)',
+    margin: 5,
+    height: 40
+  },
+  selectedButton: {
+    backgroundColor: '#007bff'
+  },
+  buttonText: {
+    color: '#000' ,
+    fontWeight: 'bold'
   },
   loader: {
     marginTop: 20
@@ -141,7 +151,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 10,
     borderRadius: 5,
-    boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.1)', // Replaced shadow with boxShadow
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
   },
   name: {
     fontSize: 18,
@@ -150,8 +160,10 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     color: '#555',
-    marginVertical: 5 },
+    marginVertical: 5
+  },
   stars: {
     fontSize: 14,
-    color: '#777' },
+    color: '#777'
+  },
 });
